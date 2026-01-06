@@ -8,8 +8,9 @@ public class Q21 {
         Scanner sc = new Scanner(System.in);
         List<Integer> list = new ArrayList<>();
 
-        while (sc.hasNext()) {
-            list.add(sc.nextInt());
+        String[] nums = sc.nextLine().split("\\s+");
+        for(String num : nums) {
+            list.add(Integer.parseInt(num));
         }
 
         Stack<Integer> stack = new Stack<>();
@@ -17,8 +18,9 @@ public class Q21 {
         for (int u : list) {
             boolean flag = true;
 
-            while (u < 0 && stack.peek() > 0 && !stack.isEmpty() && flag) {
+            while (flag && u < 0 && !stack.isEmpty() && stack.peek() > 0) {
                 int tmp = stack.peek();
+
                 if (Math.abs(u) > Math.abs(tmp)) {
                     stack.pop();
                     u = u + tmp;
@@ -37,5 +39,7 @@ public class Q21 {
                 stack.push(u);
             }
         }
+
+        System.out.println(stack.size());
     }
 }
