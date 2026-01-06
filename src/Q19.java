@@ -50,7 +50,9 @@ public class Q19 {
         for (int i = 0; i < N; i++) {
             adj[i] = new ArrayList<>();
             for (int j = 0; j < M; j++) {
-                adj[i].add(matrix[i][j]);
+                if (matrix[i][j] <= limit) {
+                    adj[i].add(j);
+                }
             }
         }
 
