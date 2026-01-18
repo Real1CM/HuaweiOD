@@ -21,20 +21,20 @@ public class ok {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = Integer.parseInt(sc.nextLine());
-        
+
         for (int i = 0; i < n; i++) {
             String[] input = sc.nextLine().split("=");
-            
-            if(input[0].equals("REQUEST")) {
-                
+
+            if (input[0].equals("REQUEST")) {
+                Request(Integer.parseInt(input[1]));
             } else if (input[0].equals("RELEASE")) {
-                
+                Release(Integer.parseInt(input[1]));
             }
         }
     }
 
     private static void Request(int size) {
-        if(size <0||size>100) {
+        if (size < 0 || size > 100) {
             System.out.println("error");
             return;
         }
@@ -42,8 +42,8 @@ public class ok {
         blocks.sort(Comparator.comparingInt(b -> b.start));
 
         int curEnd = 0;
-        for(Block block : blocks) {
-            if(block.start - curEnd >= size) {
+        for (Block block : blocks) {
+            if (block.start - curEnd >= size) {
                 blocks.add(new Block(curEnd, size));
                 System.out.println(curEnd);
                 return;
@@ -51,7 +51,7 @@ public class ok {
             curEnd = block.end();
         }
 
-        if(TOTAL_SIZE-curEnd >= size) {
+        if (TOTAL_SIZE - curEnd >= size) {
             blocks.add(new Block(curEnd, size));
             System.out.println(curEnd);
         } else {
@@ -64,7 +64,7 @@ public class ok {
 
         while (iterator.hasNext()) {
             Block block = iterator.next();
-            if(block.start == first) {
+            if (block.start == first) {
                 iterator.remove();
                 return;
             }
