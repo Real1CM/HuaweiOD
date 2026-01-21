@@ -33,6 +33,7 @@ public class Q34 {
                 used[i] = true;
 
                 if (match[i] == 0 || canFind(match[i], evens, used, match)) {
+                    //match内填入的参数很重要，会改变算法函数的传入参数
                     match[i] = odd;
                     return true;
                 }
