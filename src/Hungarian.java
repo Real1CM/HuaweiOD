@@ -11,12 +11,12 @@ public class Hungarian {
 
         M = sc.nextInt();
         N = sc.nextInt();
+        adj = new int[M][N];
         for (int j = 0; j < M; j++) {
             for (int i = 0; i < N; i++) {
                 adj[j][i] = sc.nextInt();
             }
         }
-        adj = new int[M][N];
         match = new int[N];
 
         Arrays.fill(match, -1);
@@ -29,7 +29,7 @@ public class Hungarian {
                 visited[i] = true;
 
                 if (match[i] == -1 || dfs(i)) {
-                    match[i] = 1;
+                    match[i] = u;
                     return true;
                 }
             }
