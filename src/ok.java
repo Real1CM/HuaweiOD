@@ -1,26 +1,27 @@
+import java.io.*;
 import java.util.*;
 
 public class ok {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        while (sc.hasNext()) {
-            int n = sc.nextInt();
-            int m = sc.nextInt();
-            sc.nextLine();
-            int[] cards = Arrays.stream(sc.nextLine().split(" "))
-                    .mapToInt(Integer::parseInt)
-                    .toArray();
+        int num = Integer.parseInt(sc.nextLine());
+        String s = sc.nextLine();
 
-            boolean[] reminders = new boolean[m];
-            long curSum = 0;
-            int flag = 0;
-            for (int i = 0; i < n; i++) {
-                curSum += cards[i];
-                int reminder = (int) curSum % m;
-                if (reminder == 0 || reminders[reminder]) flag = 1;
-                reminders[reminder] = true;
+        char[] arr = s.toCharArray();
+        int idx = arr.length - 1;
+
+        arr[idx]++;
+        while (idx >= 0 && idx < arr.length) {
+            if (arr[idx] >= 'a' + num) {
+                idx--;
+                if (idx > 0) arr[idx]++;
+            } else if ((idx > 0 && arr[idx] == arr[idx - 1]) ||
+                    (idx > 1 && arr[idx] == arr[idx - 2])) {
+                arr[idx]++;
+            } else {
+                idx++;
+                arr[idx] = 'a';
             }
-            System.out.println(flag);
         }
     }
 }
