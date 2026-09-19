@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Q272 {
     public static void main(String[] args) {
@@ -8,52 +10,47 @@ public class Q272 {
         if (!sc.hasNextLine()) return;
         String b = sc.nextLine();
 
-        // 1. 记录 A 中每个字符出现的所有位置索引
-        List<Integer>[] charPositions = new ArrayList[26];
-        for (int i = 0; i < 26; i++) {
-            charPositions[i] = new ArrayList<>();
-        }
-        for (int i = 0; i < a.length(); i++) {
-            charPositions[a.charAt(i) - 'a'].add(i);
+        int aLen = a.length();
+        int bLen = b.length();
+
+        List<Integer>[] aIdx = new List[26];
+        for (int i = 0; i < 26; i++) aIdx[i] = new ArrayList<>();
+
+        for (int i = 0; i < aLen; i++) {
+            char c = a.charAt(i);
+            aIdx[c - 'a'].add(i);
         }
 
-        // 2. 记录每个字符在 charPositions 中当前可用的索引下标
-        int[] ptr = new int[26];
-        int count = 0;
-
+        int cnt = 0;
         while (true) {
-            int lastIndex = -1; // 记录上一个挑选字符在 A 中的位置
-            boolean canFormB = true;
 
-            for (int i = 0; i < b.length(); i++) {
-                int charIdx = b.charAt(i) - 'a';
-                List<Integer> positions = charPositions[charIdx];
+            int lastListIdx = -1;
+            boolean isMatched = true;
+            boolean allDone = false;
+            for (int i = 0; i < bLen; i++) {
+                int curBCharIdx = b.charAt(i) - 'a';
 
-                // 在该字符的所有位置中，寻找第一个大于 lastIndex 的位置
-                boolean found = false;
-                while (ptr[charIdx] < positions.size()) {
-                    int pos = positions.get(ptr[charIdx]);
-                    ptr[charIdx]++; // 无论是否符合，该位置在这一组或之前的尝试中都已被考虑/消耗
-                    if (pos > lastIndex) {
-                        lastIndex = pos;
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found) {
-                    canFormB = false;
+                if (aIdx[curBCharIdx].isEmpty()) {
+                    if (i == 0) allDone = true;
+                    isMatched = false;
                     break;
                 }
+
+                int curListIdx = aIdx[curBCharIdx].getFirst();
+                if (curListIdx <= lastListIdx) {
+                    isMatched = false;
+                    break;
+                }
+
+                lastListIdx = curListIdx;
+                aIdx[curBCharIdx].removeFirst();
             }
 
-            if (canFormB) {
-                count++;
-            } else {
-                break;
-            }
+            if (allDone) break;
+
+            if (isMatched) cnt++;
         }
 
-        System.out.println(count);
+        System.out.println(cnt);
     }
 }
